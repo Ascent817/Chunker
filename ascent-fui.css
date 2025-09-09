@@ -1,0 +1,161 @@
+@font-face {
+  font-family: 'Carbon Plus';
+  src: url(./assets/fonts/carbon-plus-font/carbonplus-regular-bl.otf) format('opentype');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Carbon Plus';
+  src: url(./assets/fonts/carbon-plus-font/carbonplus-light-bl.otf) format('opentype');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Carbon Plus';
+  src: url(./assets/fonts/carbon-plus-font/carbonplus-bold-bl.otf) format('opentype');
+  font-weight: 700;
+}
+
+* {
+  font-family: 'Carbon Plus';
+  --primary: #99faff;
+  --text-primary: #ededec;
+  --text-secondary: #ededecbd;
+  --background: #181923;
+  --panel-background: #99faff05;
+  --header-background: #99faff0a;
+  --panel-border: #476a72;
+  color: var(--text-primary);
+  transition: all 0.3s ease-in-out;
+}
+
+body {
+  background-repeat: repeat;
+  background-size: 30px;
+  background-image: url(./assets/images/tile_dark.png);
+  padding: 22px;
+}
+
+header {
+  padding: 8px 12px;
+  background-color: var(--header-background);
+  clip-path: polygon(0% 0%, 100% 0%, 100% 42px, 380px 100%, 0% 100%);
+  width: 400px;
+
+  h1 {
+    margin: 0;
+    color: var(--primary);
+  }
+}
+
+main {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+p {
+  color: var(--text-secondary);
+  font-weight: 300;
+  margin: 0;
+
+  em {
+    color: var(--text-primary);
+    font-style: normal;
+  }
+}
+
+h2 {
+  font-size: large;
+  background-color: var(--primary);
+  color: var(--background);
+  width: fit-content;
+  padding: 4px 64px 0px 8px;
+}
+
+h3 {
+  background-color: var(--panel-background);
+  color: var(--primary);
+  font-weight: 300;
+
+  em {
+    color: var(--primary);
+    font-weight: 400;
+    font-style: normal;
+  }
+}
+
+mark {
+  background-color: var(--primary);
+  color: var(--background);
+}
+
+textarea,
+input {
+  position: relative;
+  background-color: var(--panel-background);
+  border: none;
+  color: var(--text-primary);
+  padding: 8px;
+  border: 1px solid transparent;
+  font-size: medium;
+  resize: none;
+}
+
+:focus {
+  outline: none;
+  border: 1px inset var(--panel-border);
+  margin: none;
+}
+
+button {
+  position: relative;
+  background-color: var(--primary);
+  border: none;
+  color: var(--background);
+  padding: 8px 16px 4px 16px;
+  border: 1px solid transparent;
+  font-size: large;
+  font-weight: 700;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+button:hover {
+  background-color: var(--panel-background);
+  color: var(--primary);
+  border: 1px inset var(--primary);
+}
+
+textarea::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  width: 25px;
+  height: 25px;
+  border-top: var(--primary) 1px solid;
+  border-left: var(--primary) 1px solid;
+}
+
+label {
+  position: absolute;
+  bottom: 4px;
+  right: 8px;
+  font-size: small;
+  color: var(--text-secondary);
+  z-index: 2;
+}
+
+::selection {
+  background: var(--background);
+  color: var(--text-primary);
+  filter: invert(100%);
+}
+
+::-moz-selection {
+  /* For Firefox */
+  background: white;
+  color: black;
+  filter: invert(100%);
+}

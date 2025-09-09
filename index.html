@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="ascent-fui.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="chunker.js" defer></script>
+  <title>Chunker</title>
+</head>
+
+<body>
+  <header>
+    <h1>CHUNKER V4.0</h1>
+    <p>UTILITY CREATED WITH <em>[ JS / HTML / CSS ]</em></p>
+  </header>
+  <h2>PROVIDE INPUT TEXT:</h2>
+  <div style="position: relative; width: fit-content;">
+    <textarea id="inputText" rows="10" cols="50" placeholder="Place input here..."></textarea>
+    <label>CHARACTERS: 0</label><br>
+  </div>
+
+  <h2>PROVIDE PROMPT:</h2>
+  <textarea id="prompt" rows="10" cols="50" placeholder="Place the prompt to be run for each chunk here...">
+  </textarea><br>
+  <h2>PROVIDE DEEPSEEK API KEY:</h2>
+  <input type="password" id="apiKey" size="50"><br>
+  <button id="chunkButton">SUBMIT</button>
+</body>
+
+</html>
