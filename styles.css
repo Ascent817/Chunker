@@ -1,3 +1,13 @@
 #apiKey {
   margin-bottom: 16px;
 }
+
+main {
+  display: flex;
+  flex-direction: row;
+  gap: 64px;
+}
+
+section#requestStatus {
+  flex-grow: 1;
+}

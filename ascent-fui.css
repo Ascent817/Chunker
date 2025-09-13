@@ -78,10 +78,12 @@ h3 {
   background-color: var(--panel-background);
   color: var(--primary);
   font-weight: 300;
+  padding: 4px 8px 0px 8px;
+  margin-bottom: 8px;
 
   em {
     color: var(--primary);
-    font-weight: 400;
+    font-weight: 700;
     font-style: normal;
   }
 }
@@ -140,11 +142,26 @@ textarea::before {
 
 label {
   position: absolute;
-  bottom: 4px;
+  bottom: 8px;
   right: 8px;
   font-size: small;
-  color: var(--text-secondary);
+  background-color: var(--primary);
+  color: var(--background);
   z-index: 2;
+  padding: 4px 8px 0px 8px;
+}
+
+.container {
+  /* width: fit-content; */
+}
+
+.textarea-container {
+  position: relative;
+}
+
+.panel {
+  background-color: var(--panel-background);
+  padding: 16px;
 }
 
 ::selection {

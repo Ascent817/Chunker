@@ -61,15 +61,20 @@ async function processAllChunks() {
   link.click();
   document.body.removeChild(link);
 
+  button.disabled = false;
+  button.textContent = "SUBMIT";
   alert("Final result written to output.txt.");
 }
 
 // Example: Run when button is clicked
 document.getElementById('chunkButton').onclick = processAllChunks;
-document.getElementById('inputText').addEventListener('input', function () {
-  const charCount = this.value.length;
-  const label = this.nextElementSibling;
-  if (label && label.tagName.toLowerCase() === 'label') {
-    label.textContent = `CHARACTERS: ${charCount}`;
-  }
+
+document.querySelectorAll('.character-counted').forEach(element => {
+  element.addEventListener('input', function () {
+    const charCount = this.value.length;
+    const label = this.nextElementSibling;
+    if (label && label.tagName.toLowerCase() === 'label') {
+      label.textContent = `CHARACTERS: ${charCount}`;
+    }
+  });
 });

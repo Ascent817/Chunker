@@ -12,21 +12,54 @@
 
 <body>
   <header>
-    <h1>CHUNKER V4.0</h1>
+    <h1>CHUNKER V5.0</h1>
     <p>UTILITY CREATED WITH <em>[ JS / HTML / CSS ]</em></p>
   </header>
-  <h2>PROVIDE INPUT TEXT:</h2>
-  <div style="position: relative; width: fit-content;">
-    <textarea id="inputText" rows="10" cols="50" placeholder="Place input here..."></textarea>
-    <label>CHARACTERS: 0</label><br>
-  </div>
+  <main>
+    <section id="requestCreation">
+      <h2>CREATE REQUEST</h2>
+      <div class="container">
+        <h3><em>PROVIDE </em>INPUT TEXT:</h3>
+        <div class="textarea-container">
+          <textarea class="character-counted" id="inputText" rows="10" cols="50" placeholder="Place input here...">
+        </textarea>
+          <label>CHARACTERS: 0</label><br>
+        </div>
+      </div>
+      <div class="container">
+        <h3><em>PROVIDE </em>PROMPT:</h3>
+        <textarea id="prompt" rows="10" cols="50"
+          placeholder="Place the prompt to be run for each chunk here..."></textarea><br>
+      </div>
+      <div class="container">
+        <h3><em>PROVIDE </em>DEEPSEEK API KEY:</h3>
+        <input type="password" id="apiKey" size="50"><br>
+      </div>
 
-  <h2>PROVIDE PROMPT:</h2>
-  <textarea id="prompt" rows="10" cols="50" placeholder="Place the prompt to be run for each chunk here...">
-  </textarea><br>
-  <h2>PROVIDE DEEPSEEK API KEY:</h2>
-  <input type="password" id="apiKey" size="50"><br>
-  <button id="chunkButton">SUBMIT</button>
+      <button id="chunkButton">SUBMIT</button>
+    </section>
+    <section id="requestStatus">
+      <h2>REQUEST STATUS</h2>
+      <div class="container">
+        <h3><em>ALERT </em>LIST</h3>
+        <div id="alerts">
+
+        </div>
+      </div>
+
+    </section>
+    <section id="requestResults">
+      <h2>REQUEST RESULT</h2>
+      <div class="container">
+        <h3><em>OUTPUT</em>.TXT</h3>
+        <div class="textarea-container">
+          <textarea class="character-counted" disabled id="inputText" rows="10" cols="50"
+            placeholder="No output to display"></textarea>
+          <label>CHARACTERS: 0</label><br>
+        </div>
+      </div>
+    </section>
+  </main>
 </body>
 
 </html>
