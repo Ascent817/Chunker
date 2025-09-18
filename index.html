@@ -6,46 +6,76 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="ascent-fui.css">
   <link rel="stylesheet" href="styles.css">
-  <script src="chunker.js" defer></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script defer src="chunker.js"></script>
   <title>Chunker</title>
 </head>
 
 <body>
   <header>
     <h1>CHUNKER V5.0</h1>
-    <p>UTILITY CREATED WITH <em>[ JS / HTML / CSS ]</em></p>
+    <p>UTILITY CREATED WITH <em>[ ALPINE / JS ]</em></p>
   </header>
-  <main>
+  <main
+    x-data="{ request: { text: '', prompt: '', apiKey: '' }, requestStatus: { inProgress: false, totalChunks: 0, chunksProcessed: 0 }, output: ''}">
     <section id="requestCreation">
       <h2>CREATE REQUEST</h2>
       <div class="container">
         <h3><em>PROVIDE </em>INPUT TEXT:</h3>
         <div class="textarea-container">
-          <textarea class="character-counted" id="inputText" rows="10" cols="50" placeholder="Place input here...">
-        </textarea>
-          <label>CHARACTERS: 0</label><br>
+          <textarea id="inputText" rows="10" cols="50" x-model="request.text"
+            placeholder="Place input here..."></textarea>
+          <label class="anchor bottom right" x-text="'CHARACTERS: ' + request.text.length">CHARACTERS: 0</label><br>
         </div>
       </div>
       <div class="container">
         <h3><em>PROVIDE </em>PROMPT:</h3>
-        <textarea id="prompt" rows="10" cols="50"
-          placeholder="Place the prompt to be run for each chunk here..."></textarea><br>
+        <textarea id="prompt" rows="10" cols="50" x-model="request.prompt"
+          placeholder="Place prompt to be run for each chunk here..."></textarea><br>
       </div>
       <div class="container">
         <h3><em>PROVIDE </em>DEEPSEEK API KEY:</h3>
-        <input type="password" id="apiKey" size="50"><br>
+        <input type="password" id="apiKey" size="50" x-model="request.apiKey"><br>
       </div>
 
-      <button id="chunkButton">SUBMIT</button>
+      <button id="chunkButton"
+        x-on:click="processAllChunks(request.text, request.prompt, request.apiKey)">SUBMIT</button>
     </section>
     <section id="requestStatus">
       <h2>REQUEST STATUS</h2>
-      <div class="container">
-        <h3><em>ALERT </em>LIST</h3>
-        <div id="alerts">
 
+      <div class="container">
+        <h3><em>REQUEST </em>PROGRESS</h3>
+        <div id="alerts">
+          <div class="panel">
+            <div class="flex-row">
+              <h5
+                x-text="String(requestStatus.chunksProcessed).padStart(3, '0') + ' / ' + String(requestStatus.totalChunks).padStart(3, '0') + ' CHUNKS PROCESSED'">
+                000 / 000 CHUNKS PROCESSED</h5>
+              <progress max="100" value="0" style="flex-grow: 1;"
+                x-bind:value="requestStatus.totalChunks ? (requestStatus.chunksProcessed / requestStatus.totalChunks) * 100 : 0"></progress>
+            </div>
+          </div>
         </div>
       </div>
+
+      <!-- <div class="container">
+        <h3><em>ALERT </em>LIST</h3>
+        <div id="alerts">
+          <div class="alert panel">
+            <div class="flex-row">
+              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                fill="#d83c3c">
+                <path
+                  d="m40-120 440-760 440 760H40Zm138-80h604L480-720 178-200Zm302-40q17 0 28.5-11.5T520-280q0-17-11.5-28.5T480-320q-17 0-28.5 11.5T440-280q0 17 11.5 28.5T480-240Zm-40-120h80v-200h-80v200Zm40-100Z" />
+              </svg>
+              <h4>ERR_NO_INPUT</h4>
+            </div>
+            <br>
+            <p>No input provided</p>
+          </div>
+        </div>
+      </div> -->
 
     </section>
     <section id="requestResults">
@@ -53,9 +83,24 @@
       <div class="container">
         <h3><em>OUTPUT</em>.TXT</h3>
         <div class="textarea-container">
-          <textarea class="character-counted" disabled id="inputText" rows="10" cols="50"
-            placeholder="No output to display"></textarea>
-          <label>CHARACTERS: 0</label><br>
+          <textarea disabled id="inputText" rows="10" cols="50" placeholder="No output to display"
+            x-model="output"></textarea>
+          <label class="anchor bottom right" x-text="'CHARACTERS: ' + output.length">CHARACTERS: 0</label><br>
+          <div class="anchor bottom left" style="gap: 8px;">
+            <button x-on:click="copyToClipboard(output)">
+              <svg xmlns="http://www.w3.org/2000/svg" height="20px" width="20px" viewBox="0 -960 960 960"
+                fill="var(--background)">
+                <path
+                  d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z" />
+              </svg></button>
+            <button x-on:click="downloadOutput(output)">
+              <svg xmlns="http://www.w3.org/2000/svg" height="20px" width="20px" viewBox="0 -960 960 960"
+                fill="#181923">
+                <path
+                  d="M480-336 288-528l51-51 105 105v-342h72v342l105-105 51 51-192 192ZM263.72-192Q234-192 213-213.15T192-264v-72h72v72h432v-72h72v72q0 29.7-21.16 50.85Q725.68-192 695.96-192H263.72Z" />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </section>

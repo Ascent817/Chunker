@@ -11,3 +11,10 @@ main {
 section#requestStatus {
   flex-grow: 1;
 }
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}

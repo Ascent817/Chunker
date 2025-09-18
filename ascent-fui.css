@@ -88,6 +88,17 @@ h3 {
   }
 }
 
+h4 {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+h5 {
+  margin: 2px 0px 0px 0px;
+  color: var(--primary);
+  font-size: smaller;
+}
+
 mark {
   background-color: var(--primary);
   color: var(--background);
@@ -128,6 +139,10 @@ button:hover {
   background-color: var(--panel-background);
   color: var(--primary);
   border: 1px inset var(--primary);
+
+  svg {
+    fill: var(--primary);
+  }
 }
 
 textarea::before {
@@ -141,18 +156,27 @@ textarea::before {
 }
 
 label {
-  position: absolute;
-  bottom: 8px;
-  right: 8px;
   font-size: small;
   background-color: var(--primary);
   color: var(--background);
-  z-index: 2;
   padding: 4px 8px 0px 8px;
 }
 
-.container {
-  /* width: fit-content; */
+progress {
+  appearance: none;
+  height: 8px;
+  border-radius: 25px;
+  border: 1px inset var(--primary);
+  overflow: hidden;
+  background-color: var(--panel-background);
+}
+
+progress::-webkit-progress-value {
+  background-color: var(--primary);
+}
+
+progress::-moz-progress-bar {
+  background-color: var(--primary);
 }
 
 .textarea-container {
@@ -162,6 +186,27 @@ label {
 .panel {
   background-color: var(--panel-background);
   padding: 16px;
+}
+
+.anchor {
+  position: absolute;
+  z-index: 2;
+}
+
+.left {
+  left: 8px;
+}
+
+.right {
+  right: 8px;
+}
+
+.top {
+  top: 8px;
+}
+
+.bottom {
+  bottom: 8px;
 }
 
 ::selection {

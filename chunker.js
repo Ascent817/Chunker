@@ -1,7 +1,7 @@
-// ...existing code...
+const main = document.querySelector('main');
 
 // Function to process a chunk with DeepSeek API
-async function processChunk(chunk, apiKey, prompt) {
+async function processChunk(chunk, apiKey, prompt, updateProgress) {
   const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
     method: 'POST',
     headers: {
@@ -18,21 +18,19 @@ async function processChunk(chunk, apiKey, prompt) {
   });
   const data = await response.json();
   const content = data.choices[0].message.content;
-  console.log(content);
+  updateProgress();
   return content;
 }
 
 // Process all chunks in parallel and preserve order
-async function processAllChunks() {
-  // Read values only when button is clicked
-  const apiKey = document.getElementById('apiKey').value.trim();
-  const prompt = document.getElementById('prompt').value.trim();
-  const text = document.getElementById('inputText').value;
+async function processAllChunks(text, prompt, apiKey) {
 
-  // Disable button to prevent multiple clicks
-  const button = document.getElementById('chunkButton');
-  button.disabled = true;
-  button.textContent = "PROCESSING... PLEASE WAIT";
+  console.log("Starting chunk processing...");
+
+  if (!text || !prompt || !apiKey) {
+    alert("Please fill in all fields: Text, Prompt, and API Key.");
+    return;
+  }
 
   // Split text into chunks of max 4000 characters, splitting on periods
   const sentences = text.split('.').map(s => s.trim()).filter(Boolean);
@@ -48,33 +46,39 @@ async function processAllChunks() {
     }
   }
   if (currentChunk) chunks.push(currentChunk);
+  let { totalChunks, chunksProcessed, inProgress } = Alpine.$data(main).requestStatus;
+  totalChunks = chunks.length;
+  chunksProcessed = 0;
+  inProgress = true;
+  Alpine.$data(main).requestStatus = { totalChunks, chunksProcessed, inProgress };
 
-  const results = await Promise.all(chunks.map(chunk => processChunk(chunk, apiKey, prompt)));
+  function updateProgress() {
+    chunksProcessed++;
+    Alpine.$data(main).requestStatus.chunksProcessed = chunksProcessed;
+  }
+
+  const results = await Promise.all(chunks.map(chunk => processChunk(chunk, apiKey, prompt, updateProgress)));
   const finalResult = results.join(' ');
 
-  // Download result as output.txt
-  const blob = new Blob([finalResult], { type: 'text/plain;charset=utf-8' });
+  inProgress = false;
+  Alpine.$data(main).requestStatus.inProgress = inProgress;
+  Alpine.$data(main).output = finalResult;
+}
+
+copyToClipboard = (text) => {
+  navigator.clipboard.writeText(text).then(() => {
+    alert('Copied to clipboard');
+  }).catch(err => {
+    console.error('Could not copy text: ', err);
+  });
+}
+
+downloadOutput = (text) => {
+  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
   const link = document.createElement('a');
   link.href = URL.createObjectURL(blob);
   link.download = 'output.txt';
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
-
-  button.disabled = false;
-  button.textContent = "SUBMIT";
-  alert("Final result written to output.txt.");
 }
-
-// Example: Run when button is clicked
-document.getElementById('chunkButton').onclick = processAllChunks;
-
-document.querySelectorAll('.character-counted').forEach(element => {
-  element.addEventListener('input', function () {
-    const charCount = this.value.length;
-    const label = this.nextElementSibling;
-    if (label && label.tagName.toLowerCase() === 'label') {
-      label.textContent = `CHARACTERS: ${charCount}`;
-    }
-  });
-});
