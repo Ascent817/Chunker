@@ -209,11 +209,11 @@ progress::-moz-progress-bar {
   bottom: 8px;
 }
 
-::selection {
+/* ::selection {
   background: var(--background);
   color: var(--text-primary);
   filter: invert(100%);
-}
+} */
 
 ::-moz-selection {
   /* For Firefox */
